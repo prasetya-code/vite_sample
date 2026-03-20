@@ -1,0 +1,16 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "DataLearn AI Plugin",
+  "name_for_model": "datalearn_ai",
+  "description_for_human": "Integrasi AI untuk pembelajaran data dan otomasi.",
+  "description_for_model": "Plugin untuk DataLearn AI, menyediakan API data & pembelajaran.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "url": "https://datalearn.ai/api"
+  },
+  "logo_url": "https://datalearn.ai/static/favicon/favicon-512x512.png",
+  "contact_email": "support@datalearn.ai",
+  "meta_version": "1.0.0"
+}

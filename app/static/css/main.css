@@ -1,0 +1,5 @@
+/* Tailwind base */
+@import url("tailwindcss.css");
+
+/* Component styles */
+@import url("component.css");

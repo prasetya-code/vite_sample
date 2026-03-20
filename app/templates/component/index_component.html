@@ -1,0 +1,33 @@
+<div class="min-h-screen bg-base-200 flex items-center justify-center">
+  <div class="card w-96 bg-base-100 shadow-xl">
+    <div class="card-body gap-6">
+
+      <h1 class="card-title text-2xl">Hello World</h1>
+
+      <!-- Test Alpine: toggle teks -->
+      <div x-data="{ pesan: 'Alpine.js aktif!', tampil: true }">
+        <div class="alert alert-success mb-3" x-show="tampil">
+          <span x-text="pesan"></span>
+        </div>
+        <button class="btn btn-primary btn-sm" @click="tampil = !tampil">
+          Toggle Pesan
+        </button>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Test Alpine: counter -->
+      <div x-data="{ count: 0 }">
+        <p class="text-lg font-semibold mb-3">
+          Count: <span class="badge badge-neutral badge-lg" x-text="count"></span>
+        </p>
+        <div class="flex gap-2">
+          <button class="btn btn-error btn-sm" @click="count--">Kurang</button>
+          <button class="btn btn-success btn-sm" @click="count++">Tambah</button>
+          <button class="btn btn-ghost btn-sm" @click="count = 0">Reset</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
