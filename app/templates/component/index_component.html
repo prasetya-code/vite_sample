@@ -4,11 +4,18 @@
 
       <h1 class="card-title text-2xl">Hello World</h1>
 
-      <!-- Test Alpine: toggle teks (inline x-data, bukan dari app.js) -->
+      <!--
+        TEST 1: Inline x-data
+        State ditulis langsung di HTML, cocok untuk logika
+        sederhana yang hanya dipakai di satu tempat saja.
+      -->
       <div x-data="{ pesan: 'Alpine.js aktif!', tampil: true }">
+        <!-- x-show: tampilkan/sembunyikan elemen berdasarkan nilai 'tampil' -->
         <div class="alert alert-success mb-3" x-show="tampil">
+          <!-- x-text: isi teks elemen dengan nilai variabel 'pesan' -->
           <span x-text="pesan"></span>
         </div>
+        <!-- @click: jalankan ekspresi saat button diklik -->
         <button class="btn btn-primary btn-sm" @click="tampil = !tampil">
           Toggle Pesan
         </button>
@@ -16,16 +23,22 @@
 
       <div class="divider"></div>
 
-      <!-- Test counter — pakai Alpine.data('counter') dari app.js -->
-      <!-- count akan persist (tersimpan di localStorage, tidak reset saat refresh) -->
+      <!--
+        TEST 2: Counter dengan $persist
+        Menggunakan Alpine.data('counter') dari init_alpine.js.
+        Nilai count tersimpan di localStorage — tidak reset saat refresh.
+      -->
       <div x-data="counter">
         <p class="text-lg font-semibold mb-3">
-          Count: <span class="badge badge-neutral badge-lg" x-text="count"></span>
+          Count:
+          <!-- x-text: tampilkan nilai count secara reaktif -->
+          <span class="badge badge-neutral badge-lg" x-text="count"></span>
         </p>
         <div class="flex gap-2">
-          <button class="btn btn-error btn-sm" @click="count--">Kurang</button>
-          <button class="btn btn-success btn-sm" @click="count++">Tambah</button>
-          <button class="btn btn-ghost btn-sm" @click="count = 0">Reset</button>
+          <!-- Panggil method dari Alpine.data('counter') -->
+          <button class="btn btn-error btn-sm"   @click="decrement()">Kurang</button>
+          <button class="btn btn-success btn-sm" @click="increment()">Tambah</button>
+          <button class="btn btn-ghost btn-sm"   @click="reset()">Reset</button>
         </div>
         <p class="text-xs text-base-content/50 mt-2">
           * nilai tersimpan otomatis via $persist
@@ -34,31 +47,53 @@
 
       <div class="divider"></div>
 
-      <!-- Test dropdown — pakai Alpine.data('dropdown') dari app.js -->
+      <!--
+        TEST 3: Dropdown
+        Menggunakan Alpine.data('dropdown') dari init_alpine.js.
+        Klik button untuk buka/tutup.
+        Klik di luar dropdown untuk menutup otomatis (@click.outside).
+      -->
       <div x-data="dropdown" class="relative">
         <button class="btn btn-secondary btn-sm w-full" @click="toggle()">
           Dropdown
+          <!-- Tampilkan ▲ jika open, ▼ jika tertutup -->
           <span x-text="open ? '▲' : '▼'"></span>
         </button>
+
+        <!--
+          x-show: tampilkan div ini hanya jika open === true
+          @click.outside: tutup dropdown jika klik di luar elemen ini
+        -->
         <div x-show="open"
+             @click.outside="close()"
              class="mt-2 w-full bg-base-100 border border-base-300 rounded-box shadow-md">
           <ul class="menu p-2">
-            <li><a>Item 1</a></li>
-            <li><a>Item 2</a></li>
-            <li><a>Item 3</a></li>
+            <!-- Tutup dropdown saat salah satu item diklik -->
+            <li><a @click="close()">Item 1</a></li>
+            <li><a @click="close()">Item 2</a></li>
+            <li><a @click="close()">Item 3</a></li>
           </ul>
         </div>
       </div>
 
       <div class="divider"></div>
 
-      <!-- Test modal — pakai Alpine.data('modal') dari app.js -->
+      <!--
+        TEST 4: Modal
+        Menggunakan Alpine.data('modal') dari init_alpine.js.
+        Klik "Buka Modal" untuk tampilkan overlay.
+        Klik "Tutup" untuk sembunyikan kembali.
+      -->
       <div x-data="modal">
         <button class="btn btn-accent btn-sm w-full" @click="open()">
           Buka Modal
         </button>
 
-        <!-- Overlay -->
+        <!--
+          x-show: tampilkan overlay hanya jika show === true
+          fixed inset-0: overlay menutupi seluruh layar
+          z-50: pastikan modal di atas semua elemen lain
+        -->
         <div x-show="show"
              class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div class="card w-80 bg-base-100 shadow-xl">
@@ -66,6 +101,7 @@
               <h2 class="card-title">Modal Test</h2>
               <p>Modal dari Alpine.data berhasil!</p>
               <div class="card-actions justify-end mt-2">
+                <!-- Panggil method close() dari Alpine.data('modal') -->
                 <button class="btn btn-sm" @click="close()">Tutup</button>
               </div>
             </div>
